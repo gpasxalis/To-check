@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MyApp</title>
+		<meta charset="utf-8">
+		<link href="{{ url_for('static', filename='css/TableStyle.css') }}" rel="stylesheet">
+	</head>
+
+
+	<body>
+		<h1>{{ tag_input }}!</h1>
+		<h2> {{ value_input }}</h2>
+		<h2> {{ res }}</h2>
+
+		{% if res %}
+
+			<h1>YAY</h1>
+
+			<!-- Tag-Data Table -->
+			<table class="lib-data">
+				<thead>
+					<tr>
+					<th>Data</th>
+					<th>Tag</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+
+
+
+					{% for hit in res['hits']['hits'] %}
+						<tr>
+							{% for doc_datagroup in hit['_source']['datagroup'] recursive  %}
+								{% if tag_input == loop(doc_datagroup.taggroup) %}
+								<!--{% set datagroup_loop = loop %}-->
+
+								<!-- Data Column -->
+
+
+								<td>
+									<!--{% if datagroup_loop.first %} -->
+									{{ doc_datagroup.value }}
+									<!--{% endif %}-->
+								</td>
+
+								<!-- Tag Column -->
+
+
+								<!--{% for doc_record in hit['_source']['record'] %}
+									{% for doc_subfields in doc_record['subfields'] %}
+
+										{% if datagroup_loop.first %}
+											{% if doc_datagroup['value'] == doc_subfields['data'] %}
+												<td>
+													{{ doc_record['tag'] }}
+
+												</td>
+											{% endif %}
+										{% endif %}
+
+									{% endfor %}
+								{% endfor %}-->
+								{% endif %}
+							{% endfor %}
+						</tr>
+
+					{% endfor %}
+
+				</tbody>
+			</table>
+
+
+		{% endif %}
+	</body>
+</html>
